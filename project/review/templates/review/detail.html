@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="width: 600px">
+  <div class="p-4" style="box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%); border-radius: 15px;">
+    <form action="" method="POST">
+      <div class="d-flex justify-content-end">
+        <a class="mx-1" href="{% url 'review:update' review.pk %}" style="color: #35C5F0">수정</a>
+        <a class="mx-1" href="{% url 'review:delete' review.pk %}" style="color: #f77">삭제</a>
+      </div>
+      <h1>{{ review.title }}</h1>
+      <p>{{ review.content }}</p>
+      <div class="d-flex gap-2 justify-content-end">
+        <input type="submit" class="btn" style="width: 85px; background-color: #35C5F0; color: white;" value="작성완료">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="width: 600px">
+  <div class="p-4" style="box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%); border-radius: 15px;">
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ review_form.as_p }}
+      <div class="d-flex gap-2 justify-content-end">
+        <input type="submit" class="btn" style="width: 85px; background-color: #35C5F0; color: white;" value="작성완료">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

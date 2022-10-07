@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1>hello</h1>
+  <div class="d-flex justify-content-center">
+    <table class="table text-center align-middle" style="width: 100%;">
+      <thead>
+        <tr class="p-3 mb-2 bg-dark text-white text-center">
+          <th scope="col">리뷰 번호</th>
+          <th scope="col">리뷰 제목</th>
+          <th scope="col">작성자</th>
+          <th scope="col">작성시간</th>
+          <th scope="col">평점</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for review in reviews %}
+        <tr class="text-center">
+          <td scope="row">{{ review.id }}</td>
+          <td><a href="{% url 'review:detail' review.pk %}">{{ review.title }}</a></td>
+          <td>{{ review.writer }}</td>
+          <td>{{ review.created_at }}</td>
+          <td>{{ review.grede }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-end mb-5">
+    <a class="btn btn-primary" href="{% url 'review:create' %}">리뷰작성</a>
+  </div>
+</div>
+{% endblock %}
