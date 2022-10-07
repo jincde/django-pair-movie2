@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for movie in movie_info %}
+{{ movie.movie_name }}
+{{ movie.director_name }}
+{{ movie.summary }}
+{{ movie.running_time }}
+{{ movie.release }}
+<a href="{% url 'review:create' movie.id %}">리뷰 쓰러가기</a>
+{% endfor %}
+
+{% endblock content %}

@@ -1,67 +1,76 @@
 from django.shortcuts import render, redirect
 from .forms import ReviewForm
-from .models import Review
+from .models import MovieInfo, Review
 
 # Create your views here.
+
+
 def index(request):
-  reviews = Review.objects.order_by('-pk')
-  
-  context = {
-    'reviews' : reviews
-  }
-  
-  return render(request, 'review/index.html', context)
+    reviews = Review.objects.order_by("-pk")
 
-def create(request):
-  if request.method == 'POST':
-    review_form = ReviewForm(request.POST)
+    context = {"reviews": reviews}
 
-    if review_form.is_valid():
-      review_form.save()
+    return render(request, "review/index.html", context)
 
-      return redirect('review:index')
 
-  else:
-    review_form = ReviewForm()
+def main(request):
+    movie_info = MovieInfo.objects.all()
+    context = {
+        "movie_info": movie_info,
+    }
+    return render(request, "review/main.html", context)
 
-  context = {
-    'review_form' : review_form
-  }
 
-  return render(request, 'review/create.html', context)
+def create(request, pk):
+    movie_info = MovieInfo.objects.get(pk=pk)
+    if request.method == "POST":
+        review_form = ReviewForm(request.POST)
+
+        if review_form.is_valid():
+            review_form.save()
+
+            return redirect("review:index")
+
+    else:
+        review_form = ReviewForm()
+
+    context = {
+        "review_form": review_form,
+        "movie_title": movie_info.movie_name,
+    }
+
+    return render(request, "review/create.html", context)
+
 
 def detail(request, pk):
-  review = Review.objects.get(pk=pk)
+    review = Review.objects.get(pk=pk)
 
-  context = {
-    'review' : review
-  }
+    context = {"review": review}
 
-  return render(request, 'review/detail.html', context)
+    return render(request, "review/detail.html", context)
+
 
 def update(request, pk):
-  review = Review.objects.get(pk=pk)
+    review = Review.objects.get(pk=pk)
 
-  if request.method == 'POST':
-    review_form = ReviewForm(request.POST, instance=review)
+    if request.method == "POST":
+        review_form = ReviewForm(request.POST, instance=review)
 
-    if review_form.is_valid():
-      review_form.save()
+        if review_form.is_valid():
+            review_form.save()
 
-      return redirect('review:detail', review.pk)
+            return redirect("review:detail", review.pk)
 
-  else:
-    review_form = ReviewForm(instance=review)
+    else:
+        review_form = ReviewForm(instance=review)
 
-  context = {
-    'review' : review,
-    'review_form' : review_form
-  }
+    context = {"review": review, "review_form": review_form}
 
-  return render(request, 'review/update.html', context)
+    return render(request, "review/update.html", context)
+
 
 def delete(request, pk):
-  review = Review.objects.get(pk=pk)
-  review.delete()
+    review = Review.objects.get(pk=pk)
+    review.delete()
 
-  return redirect('review:index')
+    return redirect("review:index")
