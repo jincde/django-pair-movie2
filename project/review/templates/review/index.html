@@ -1,31 +1,36 @@
 {% extends 'base.html' %}
-{% block content %}
-<div class="container">
-  <h1>hello</h1>
-  <div class="d-flex justify-content-center">
-    <table class="table text-center align-middle" style="width: 100%;">
-      <thead>
-        <tr class="p-3 mb-2 bg-dark text-white text-center">
-          <th scope="col">리뷰 번호</th>
-          <th scope="col">리뷰 제목</th>
-          <th scope="col">작성자</th>
-          <th scope="col">작성시간</th>
-          <th scope="col">평점</th>
-        </tr>
-      </thead>
 
-      <tbody>
-        {% for review in reviews %}
-        <tr class="text-center">
-          <td scope="row">{{ review.id }}</td>
-          <td><a href="{% url 'review:detail' review.pk %}">{{ review.title }}</a></td>
-          <td>{{ review.writer }}</td>
-          <td>{{ review.created_at }}</td>
-          <td>{{ review.grede }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+<!-- Content -->
+{% block content %}
+
+<div class="d-flex justify-content-center my-5">
+  <div class="d-flex justify-content-center flex-wrap p-2 card-wrap" style="width: 1440px;">
+    {% if retrieved_review_data %}
+    <!-- for retrieved_review_data -->
+    {% for review in retrieved_review_data %}
+    <a href="{% url 'review:detail' review.pk %}" style="text-decoration: none;">
+      <div class="p-4 mt-2 mb-5 mx-3 contentcard"
+        style="width: 301px; box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%); border-radius: 15px;">
+        <h3>{{ review.title }}</h3>
+        <hr>
+        <p class="mt-4 card-p">{{ review.content }}</p>
+      </div>
+    </a>
+    {% endfor %}
+    {% else %}
+    <!-- for reviews -->
+    {% for review in reviews %}
+    <a href="{% url 'review:detail' review.pk %}">
+      <div class="p-4 mt-2 mb-5 mx-3 contentcard"
+        style="width: 301px; box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%); border-radius: 15px; ">
+        <h3>{{ review.title }}</h3>
+        <hr>
+        <p class="mt-4 card-p">{{ review.content }}</p>
+      </div>
+    </a>
+    {% endfor %}
+    {% endif %}
   </div>
 </div>
+
 {% endblock %}
